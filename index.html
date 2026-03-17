@@ -1404,7 +1404,6 @@ function openDrawer(idx) {
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       Share
     </button>`;
-  saveScrollPos();
   history.pushState({ drawer: true }, '');
   document.getElementById('drawer-ov').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1417,7 +1416,7 @@ function openDrawer(idx) {
 
 document.getElementById('drawer-close').onclick = closeDrawer;
 document.getElementById('drawer-ov').onclick = e => { if (e.target === document.getElementById('drawer-ov')) closeDrawer(); };
-function closeDrawer() { document.getElementById('drawer-ov').classList.remove('open'); document.body.style.overflow = ''; showSplash(); restoreScrollPos(); }
+function closeDrawer() { document.getElementById('drawer-ov').classList.remove('open'); document.body.style.overflow = ''; showSplash(); }
 
 /* ── FORCE REFRESH BUTTON ── */
 document.getElementById('refresh-btn').addEventListener('click', () => {
@@ -1545,13 +1544,7 @@ searchEl.addEventListener('input', () => {
   searchDebounce = setTimeout(applyFilters, 150);
 });
 
-/* ── SCROLL POSITION MEMORY ── */
-let savedScrollY = 0;
-function saveScrollPos() { savedScrollY = window.scrollY; }
-function restoreScrollPos() {
-  requestAnimationFrame(() => window.scrollTo({ top: savedScrollY, behavior: 'instant' }));
-}
-// openDrawer and closeDrawer handle scroll + history directly — no wrappers needed
+/* ── SCROLL POSITION MEMORY removed — was causing page jump on mobile ── */
 
 /* ── BACK BUTTON CLOSES DRAWER ── */
 window.addEventListener('popstate', () => {
